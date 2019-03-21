@@ -15,28 +15,33 @@ const styles = {
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
+    marginRight: 20,  
   },
 };
 
 class NavBar extends React.Component {
+  state = {
+    angka: 0
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps,"<============== next Props")
+    this.setState({
+      angka: nextProps.angkaParent + 1
+    })
+  }
+
   render(){
-    const { classes } = this.props;
+    const { classes, angkaParent } = this.props;
+
     return (
       <div className={classes.root}>
        <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            {this.props.judul}
+            {this.props.angkaParent + 1}
           </Typography>
-          <Button color="inherit">{this.props.informasi}</Button>
-          <Button 
-            variant="contained" 
-            color="primary" 
-            onClick={() => this.props.ubahJudul('dari button udpdate title')}
-          >
-            Primary
-          </Button>
+            
         </Toolbar>
       </AppBar>
       </div>
