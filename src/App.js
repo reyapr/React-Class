@@ -6,7 +6,8 @@ import ListPeople from './Components/ListPeople'
 import Button from '@material-ui/core/Button';
 import MyButton, { fungsi1 } from './Reusable/MyButton'
 import axios from 'axios'
-
+import ContextStore from './contextStore'
+import HookExample from './Components/Hook'
 
 class App extends Component {
   constructor(props){
@@ -18,13 +19,13 @@ class App extends Component {
       angka: 0 
     }
   }
+  
 
   changeTitle = (val) => {
     
     this.setState({
       title: val,
       info: 'info baru'
-
     })
   }
 
@@ -53,33 +54,36 @@ class App extends Component {
     console.log(people,"<=================== PEOPLE FROM RENDER")
     const linkHacktiv8 = "https://hacktiv8.com/img/fox.png__vzu2vhp2VRX%2Bewg7J0bPlaAa9e377ae39495073d0e66db163fc8d9b"
     return (
-      <React.Fragment>
-        <NavBar judul={title} informasi={info} ubahJudul={this.changeTitle} angkaParent={angka}/>
-        <div>
-          <header className="App-header">
-            <ListPeople people={people} />
-            {angka}
-            <Button 
-              variant="contained" 
-              onClick={this.ubahAngka}
-              // title="Increment"
-              color="secondary"
-            >
-              increment
-            </Button>
-            <ul>
-              {
-                people.map(orang => {
-                  return (
-                    <li>name: {orang.name}</li>
-                  )
-                })
-              }
-            </ul>
-          </header>
-          
-        </div>
-      </React.Fragment>
+      <ContextStore.Provider value={this.state}>
+        <React.Fragment>
+          <NavBar judul={title} informasi={info} ubahJudul={this.changeTitle} angkaParent={angka}/>
+          <div>
+            {/* <header className="App-header">
+              <ListPeople people={people} />
+              {angka}
+              <Button 
+                variant="contained" 
+                onClick={this.ubahAngka}
+                // title="Increment"
+                color="secondary"
+              >
+                increment
+              </Button>
+              <ul>
+                {
+                  people.map(orang => {
+                    return (
+                      <li>name: {orang.name}</li>
+                    )
+                  })
+                }
+              </ul>
+            </header> */}
+            <HookExample/>
+            
+          </div>
+        </React.Fragment>
+      </ContextStore.Provider>
     );
   }
 }

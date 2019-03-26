@@ -14,8 +14,6 @@ class ListPeople extends Component {
   }
 
   render () {    
-    console.log(this.props.people,"<========= props")
-    console.log("===========================================")
     return(
       <ul>       
         <React.Fragment>
