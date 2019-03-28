@@ -9,13 +9,12 @@ export default function hookExample() {
   return (
     <div>
       <p>You clicked {count} times</p>
-      {JSON.stringify(mobil)}
-      {/* <ul>
+      <ul>
         ini mobil:
         {
           mobil.map(mobil=> mobil)
         }
-      </ul> */}
+      </ul>
       <button onClick={() => setCount(count + 1)}>
         Click me
       </button>

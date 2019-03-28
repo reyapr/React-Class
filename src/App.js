@@ -8,6 +8,13 @@ import MyButton, { fungsi1 } from './Reusable/MyButton'
 import axios from 'axios'
 import ContextStore from './contextStore'
 import HookExample from './Components/Hook'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Home from './Components/Home'
+import Profile from './Components/Profile'
+import About from './Components/About'
+import Me from './Components/Me'
+import Other from './Components/Other'
+import NotFound from './Components/NoMatch'
 
 class App extends Component {
   constructor(props){
@@ -51,39 +58,24 @@ class App extends Component {
 
   render() {
     let { title, info, people, angka } = this.state
-    console.log(people,"<=================== PEOPLE FROM RENDER")
-    const linkHacktiv8 = "https://hacktiv8.com/img/fox.png__vzu2vhp2VRX%2Bewg7J0bPlaAa9e377ae39495073d0e66db163fc8d9b"
     return (
-      <ContextStore.Provider value={this.state}>
-        <React.Fragment>
-          <NavBar judul={title} informasi={info} ubahJudul={this.changeTitle} angkaParent={angka}/>
-          <div>
-            {/* <header className="App-header">
-              <ListPeople people={people} />
-              {angka}
-              <Button 
-                variant="contained" 
-                onClick={this.ubahAngka}
-                // title="Increment"
-                color="secondary"
-              >
-                increment
-              </Button>
-              <ul>
-                {
-                  people.map(orang => {
-                    return (
-                      <li>name: {orang.name}</li>
-                    )
-                  })
-                }
-              </ul>
-            </header> */}
-            <HookExample/>
+      <BrowserRouter>
+        <ContextStore.Provider value={this.state}>
+          <React.Fragment>
+
+            <NavBar judul={title} informasi={info} ubahJudul={this.changeTitle} angkaParent={angka}/>
+            <Switch>
+              <Route exact path="/" component={Home}/>
+              <Route path="/profile" component={Profile}/>
+              <Route exact path="/about" component={About}/>
             
-          </div>
-        </React.Fragment>
-      </ContextStore.Provider>
+              <Route path="/about/other" component={Other}/>
+              <Route path="/about/:name" component={Me}/>
+              <Route component={NotFound} />
+            </Switch>
+          </React.Fragment>
+        </ContextStore.Provider>
+      </BrowserRouter>
     );
   }
 }

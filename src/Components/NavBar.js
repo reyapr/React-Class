@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import ContextStore from '../contextStore'
+import {Link} from 'react-router-dom'
 
 const styles = {
   root: {
@@ -41,20 +42,29 @@ class NavBar extends React.Component {
 
   render(){
     const { classes, angkaParent } = this.props;
-
+    let name = 'udin'
     return (
       <ContextStore.Consumer>
         { parameterThisState => {
-          console.log(parameterThisState,`<========================= parameterThisState =======================`);
           return (
             <div className={classes.root}>
              <AppBar position="static">
                <Toolbar  dariAngkaParent={angkaParent}>
                  <Typography variant="h6" color="inherit" className={classes.grow}>
-                   {parameterThisState.angka + 1}
+                   <Link to="/" >Home</Link>
                  </Typography>
-
-                   
+                 <Typography variant="h6" color="inherit" className={classes.grow}>
+                  <Link to="/profile" >Profile</Link>
+                 </Typography>
+                 <Typography variant="h6" color="inherit" className={classes.grow}>
+                  <Link to="/about" >About</Link>
+                 </Typography>
+                 <Typography variant="h6" color="inherit" className={classes.grow}>
+                  <Link to={`/about/${name}`} >Me</Link>
+                 </Typography>
+                 <Typography variant="h6" color="inherit" className={classes.grow}>
+                  <Link to={{pathname:`/about/${name}`, search:"?baju=merah"}}  >Search Udin</Link>
+                 </Typography>
                </Toolbar>
              </AppBar>
            </div>
