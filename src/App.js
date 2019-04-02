@@ -8,13 +8,15 @@ import MyButton, { fungsi1 } from './Reusable/MyButton'
 import axios from 'axios'
 import ContextStore from './contextStore'
 import HookExample from './Components/Hook'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Home from './Components/Home'
 import Profile from './Components/Profile'
 import About from './Components/About'
 import Me from './Components/Me'
 import Other from './Components/Other'
 import NotFound from './Components/NoMatch'
+import { Provider } from 'react-redux'
+import store from './Redux/store'
 
 class App extends Component {
   constructor(props){
@@ -56,26 +58,40 @@ class App extends Component {
       })
   }
 
+  login(){
+    if(this.state.login){
+      return(    
+      <Redirect
+        to={{
+          pathname: "/",
+          state: { from: this.props.location }
+        }}
+      />)
+    }
+  }
+
   render() {
     let { title, info, people, angka } = this.state
     return (
-      <BrowserRouter>
-        <ContextStore.Provider value={this.state}>
-          <React.Fragment>
+      <Provider store={store}>
+         <BrowserRouter>
+          <ContextStore.Provider value={this.state}>
+            <React.Fragment>
 
-            <NavBar judul={title} informasi={info} ubahJudul={this.changeTitle} angkaParent={angka}/>
-            <Switch>
-              <Route exact path="/" component={Home}/>
-              <Route path="/profile" component={Profile}/>
-              <Route exact path="/about" component={About}/>
-            
-              <Route path="/about/other" component={Other}/>
-              <Route path="/about/:name" component={Me}/>
-              <Route component={NotFound} />
-            </Switch>
-          </React.Fragment>
-        </ContextStore.Provider>
-      </BrowserRouter>
+              <NavBar judul={title} informasi={info} ubahJudul={this.changeTitle} angkaParent={angka}/>
+              <Switch>
+                <Route exact path="/" component={Home}/>
+                <Route path="/profile" component={Profile}/>
+                <Route exact path="/about" component={About}/>
+              
+                <Route path="/about/other" component={Other}/>
+                <Route path="/about/:name" component={Me}/>
+                <Route component={NotFound} />
+              </Switch>
+            </React.Fragment>
+          </ContextStore.Provider>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }
